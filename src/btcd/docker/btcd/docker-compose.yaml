@@ -9,13 +9,13 @@ services:
       volumes:
         - docker_shared:/rpc
         - docker_bitcoin:/data
-      # ports:
-      #   - 5432:5432
+      ports:
+        - 18333:18334
       environment:
         - RPCUSER
         - RPCPASS
         - NETWORK=testnet
-        - DEBUG
+        - DEBUG=debug
         - MINING_ADDRESS
       entrypoint: ["./start-btcd.sh"]
 
