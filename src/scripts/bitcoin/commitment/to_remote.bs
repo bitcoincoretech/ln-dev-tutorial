@@ -1,0 +1,3 @@
+OP_0 <remotepubkey>
+
+OP_0 ccf1af2f2aabee14bb40fa3851ab2301de843110
