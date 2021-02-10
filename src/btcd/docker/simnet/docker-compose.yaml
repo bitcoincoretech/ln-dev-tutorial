@@ -1,13 +1,13 @@
 version: '3.9'
 services:
     btcd-simnet:
-      image: btcd
+      image: btcd:v2
       container_name: btcd-simnet
       volumes:
-        - btcd_simnet_rpc:/rpc
-        - btcd_simnet_data:/data
+        - ./volumes/rpc:/rpc
+        - ./volumes/data:/data
       ports:
-        - 18333:18351
+        - 18351:18556
       environment:
         - RPCUSER
         - RPCPASS
@@ -16,13 +16,19 @@ services:
         - MINING_ADDRESS
       entrypoint: ["./start-btcd.sh"]
       # command: btcd --simnet --txindex --rpcuser=devuser --rpcpass=devpass --datadir=/data --logdir=/data --rpccert=/rpc/rpc.cert --debuglevel=info
-      # --notls
-volumes:
-  # shared volume is need to store the btcd rpc certificates and use it within
-  # btcctl and lnd containers.
-  btcd_simnet_rpc:
-    external: true
-  # bitcoin volume is needed for maintaining blockchain persistence
-  # during btcd container recreation.
-  btcd_simnet_data:
-    external: true
+    # lnd-simnet-bob:
+    #   image: lightninglabs/lnd:v0.12.0-beta.rc6
+    #   container_name: lnd-simnet-bob
+    #   environment:
+    #     - RPCUSER=devuser
+    #     - RPCPASS=devpass
+    #     - NETWORK=simnet
+    #     - CHAIN=bitcoin
+    #     - DEBUG=info
+    #   volumes:
+    #     - ./volumes/rpc:/rpc
+    #     - ./volumes/lnd/bob:/root/.lnd
+    #   ports:
+    #     - 10051:10009
+    #   #entrypoint: ["./start-lnd.sh"]
+    #   command: --noseedbackup  --btcd.rpccert=/rpc/rpc.cert --bitcoin.active --bitcoin.simnet --bitcoin.node=btcd --btcd.rpchost=btcd-simnet:18556 --btcd.rpcuser=devuser --btcd.rpcpass=devpass --rpclisten=localhost:10009 --debuglevel=trace
