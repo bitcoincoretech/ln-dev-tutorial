@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+    lnd:
+      image: lightninglabs/lnd:v0.12.0-beta.rc6
+      container_name: lnd-prod
+      volumes:
+        - ./volumes/.lnd:/root/.lnd
+      ports:
+        - 50009:10009
+        - 50080:10080
+      command: "lnd --rpclisten=0.0.0.0:10009 --restlisten=0.0.0.0:10080 --bitcoin.active --bitcoin.mainnet \
+               --bitcoin.node=neutrino \
+               --neutrino.addpeer=btcd-mainnet.lightning.computer  \
+               --neutrino.addpeer=mainnet1-btcd.zaphq.io \
+               --neutrino.addpeer=mainnet2-btcd.zaphq.io \
+               --neutrino.addpeer=mainnet3-btcd.zaphq.io \
+               --neutrino.addpeer=mainnet4-btcd.zaphq.io \
+               --debuglevel=info"

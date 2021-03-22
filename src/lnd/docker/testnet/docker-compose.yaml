@@ -4,16 +4,17 @@ services:
       image: lightninglabs/lnd:v0.12.0-beta.rc6
       container_name: lnd-testnet-alice
       volumes:
-        - docker_shared:/rpc
-        - lnd:/root/.lnd
+        - ./volumes/.lnd:/root/.lnd
       ports:
         - 10009:10009
-      command: lnd --noseedbackup --bitcoin.active --bitcoin.testnet --bitcoin.node=neutrino --neutrino.connect=faucet.lightning.community  --debuglevel=info
-      # command: --noseedbackup  --btcd.rpccert=/rpc/rpc.cert --bitcoin.active --bitcoin.testnet --bitcoin.node=btcd --btcd.rpchost=host.docker.internal:18333 --btcd.rpcuser=devuser --btcd.rpcpass=devpass --rpclisten=localhost:10009 --debuglevel=trace
-volumes:
-  # shared volume is need to store the btcd rpc certificates and use it within
-  # btcctl and lnd containers.
-  docker_shared:
-    external: true
-  lnd:
-    driver: local
+        - 10080:10080
+      command: lnd --rpclisten=0.0.0.0:10009 --restlisten=0.0.0.0:10080 --bitcoin.active --bitcoin.testnet --bitcoin.node=neutrino --neutrino.connect=faucet.lightning.community  --debuglevel=info
+    lnd2:
+      image: lightninglabs/lnd:v0.12.0-beta.rc6
+      container_name: lnd-testnet-bob
+      volumes:
+        - ./volumes/.lnd2:/root/.lnd
+      ports:
+        - 20009:10009
+        - 20080:10080
+      command: lnd --rpclisten=0.0.0.0:10009 --restlisten=0.0.0.0:10080 --bitcoin.active --bitcoin.testnet --bitcoin.node=neutrino --neutrino.connect=faucet.lightning.community  --debuglevel=info
