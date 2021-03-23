@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+    lnd:
+      image: sphinx-relay
+      container_name: sphinx-relay-prod
+      volumes:
+        - /Users/moto/Documents/GitHub/bitcoincoretech/ln-dev-tutorial/src/lnd/docker/prod/volumes/.lnd:/relay/.lnd
+      ports:
+        - 3001:3001
+      command: "npm start"
+      environment:
+        - PORT=3000
+        - NODE_ENV=production
+        - LND_IP=host.docker.internal
+        - LND_PORT=11009
+        - MACAROON_LOCATION=/relay/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
+        - TLS_LOCATION=/relay/.lnd/tls.cert
+        - LND_LOG_LOCATION=/relay/.lnd/logs/bitcoin/mainnet/lnd.log
+        - PUBLIC_URL=localhost:3001
