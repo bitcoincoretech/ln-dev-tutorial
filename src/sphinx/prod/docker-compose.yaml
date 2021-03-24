@@ -1,19 +1,32 @@
 version: '3.9'
+
+networks:
+  spx:
+
 services:
-    lnd:
+    sphinx-chat:
       image: sphinx-relay
       container_name: sphinx-relay-prod
       volumes:
-        - /Users/moto/Documents/GitHub/bitcoincoretech/ln-dev-tutorial/src/lnd/docker/prod/volumes/.lnd:/relay/.lnd
+        - ./volumes/.lnd:/relay/.lnd
       ports:
         - 3001:3001
       command: "npm start"
       environment:
-        - PORT=3000
+        - PORT=3001
         - NODE_ENV=production
-        - LND_IP=host.docker.internal
+        - LND_IP=docker-host
         - LND_PORT=11009
-        - MACAROON_LOCATION=/relay/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
-        - TLS_LOCATION=/relay/.lnd/tls.cert
-        - LND_LOG_LOCATION=/relay/.lnd/logs/bitcoin/mainnet/lnd.log
+        - MACAROON_LOCATION=/relay/.lnd/macaroons/admin.macaroon
+        - TLS_LOCATION=/relay/.lnd/cert/tls.cert
         - PUBLIC_URL=localhost:3001
+      networks:
+        - spx
+
+    docker-host:
+      image: qoomon/docker-host
+      cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
+      mem_limit: 8M
+      restart: on-failure
+      networks:
+        - spx
