@@ -8,7 +8,7 @@ services:
       ports:
         - 10009:10009
         - 10080:10080
-      command: lnd --rpclisten=0.0.0.0:10009 --restlisten=0.0.0.0:10080 --bitcoin.active --bitcoin.testnet --bitcoin.node=neutrino --neutrino.connect=faucet.lightning.community  --debuglevel=info
+      command: lnd --rpclisten=0.0.0.0:10009 --restlisten=0.0.0.0:10080  --bitcoin.active --bitcoin.testnet --bitcoin.node=neutrino --neutrino.connect=faucet.lightning.community  --debuglevel=info
     lnd2:
       image: lightninglabs/lnd:v0.12.0-beta.rc6
       container_name: lnd-testnet-bob

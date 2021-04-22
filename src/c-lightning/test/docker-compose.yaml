@@ -1,0 +1,22 @@
+version: "3"
+services:
+  clightning:
+    image: c-lightning:local
+    container_name: lightningd-test
+    # entrypoint: [ "/usr/bin/tini", "-g", "--", "./entrypoint.sh", "sleep 60" ]
+    command:
+      - --network=testnet
+      - --plugin-dir=/root/plugins
+      - --alias=testnet-lightningd-alice
+      - --log-level=debug
+    environment:
+      EXPOSE_TCP: "true"
+    expose:
+      - "9735"
+    ports:
+      - "0.0.0.0:9736:9735"
+    volumes:
+      - "clightning_bitcoin_datadir:/root/.lightning"
+
+volumes:
+    clightning_bitcoin_datadir:
