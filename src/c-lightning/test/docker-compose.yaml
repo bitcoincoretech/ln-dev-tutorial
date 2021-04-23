@@ -3,7 +3,6 @@ services:
   clightning:
     image: c-lightning:local
     container_name: lightningd-test
-    # entrypoint: [ "/usr/bin/tini", "-g", "--", "./entrypoint.sh", "sleep 60" ]
     command:
       - --network=testnet
       - --plugin-dir=/root/plugins

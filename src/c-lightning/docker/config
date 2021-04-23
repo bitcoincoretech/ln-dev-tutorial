@@ -1,5 +1,5 @@
 disable-plugin=bcli
-plugin=/root/plugins/c-lightning-REST/c-lightning-REST-0.4.3/plugin.js
+plugin=/root/plugins/c-lightning-REST/plugin.js
 rest-port=3002
 rest-docport=4001
 rest-protocol=http
