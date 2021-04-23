@@ -18,6 +18,7 @@ services:
       - "0.0.0.0:3002:3002"
     volumes:
       - "clightning_bitcoin_datadir:/root/.lightning"
+      - "./volumes/c-lightning-REST/certs:/root/plugins/c-lightning-REST/certs"
 
 volumes:
     clightning_bitcoin_datadir:
