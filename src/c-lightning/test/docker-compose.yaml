@@ -13,8 +13,10 @@ services:
       EXPOSE_TCP: "true"
     expose:
       - "9735"
+      - "3002"
     ports:
       - "0.0.0.0:9736:9735"
+      - "0.0.0.0:3002:3002"
     volumes:
       - "clightning_bitcoin_datadir:/root/.lightning"
 
